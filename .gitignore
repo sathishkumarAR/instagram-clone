@@ -1,0 +1,7 @@
+dev.js
+node_modules/
+notes.txt
+.env
+.env.test
+.cache
+.npm

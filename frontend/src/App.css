@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+body{
+  overflow:visible !important;
+}
+
+a{
+  color: black !important;
+}
+.mycard h1{
+  font-family: 'Grand Hotel', cursive;
+  text-align: center;
+  font-size: 4rem;
+}
+nav .nav-wrapper{
+  padding-right: 30px;
+}
+nav .brand-logo{
+  font-family: 'Grand Hotel', cursive;
+  font-size: 3rem;
+}
+nav .brand-logo.left{
+  left:2rem;
+}
+.mycard{
+  margin-top: 5%;
+}
+.input-outlined{
+  border: 2px solid #eee !important;
+  padding:1px 2px !important;
+  width: calc(100% - 2.5rem) !important;
+  margin: 20px auto !important;
+  float: none;
+  display: block;
+  border-radius: 4px !important;
+  transition: box-shadow, border-color 0.15s;
+}
+
+textarea{
+  border-radius: 5px;
+}
+.auth-card button{
+  text-transform: capitalize;
+  border-radius: 5px;
+}
+.input-field .btn span{
+  font-weight: 600;
+  border-radius: 10px;
+  height: 20px;
+}
+.input-field button{
+  width: calc(100% - 2.5rem) !important;
+}
+.createPost-card button{
+  width: calc(100% - 2.5rem) !important;
+}
+.input-field .input-outlined:focus {
+  border: 1px solid rgb(114, 109, 109) !important;
+  box-shadow: 0 1px 0 0 rgb(114, 109, 109) !important;
+}
+
+.blueButton{
+  background-color: #0095f6 !important;
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 4px;
+  line-height: 0;
+  margin-bottom: 10px;
+  box-shadow: none;
+}
+.blueLink.dark a{
+  color: #385185 !important;
+  font-weight: 600;
+}
+.blueLink.light a{
+  color: #0095f6 !important;
+  font-weight: 600;
+}
+.px16{
+  font-size: 16px !important;
+}
+.mt100px{
+  margin-top: 100px !important;
+}
+
+.warning-icon{
+  color: #ea9f14f0;
+  margin-top: 20px;
+}
+.blueButton:hover{
+  box-shadow: none;
+  background-color: #0074cc !important;
+}
+.followButton{
+  height: 30px;
+  width: 91px;
+}
+.unfollowButton{
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 4px;
+  line-height: 0;
+  height: 30px;
+  width: 91px;
+  background-color: transparent !important;
+  color: black;
+  border:1px solid grey;
+  box-shadow: none;
+}
+.unfollowButton:hover{
+  box-shadow: none;
+}
+
+.auth-card{
+  padding:20px;
+  text-align: center;
+  max-width: 400px;
+  margin: 10px auto;
+}
+.auth-card p{
+  display: inline;
+  padding-right: 10px;
+}
+.heading-text{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.link{
+  color:aqua;
+}
+.profileImage{
+  width: 150px;
+  height:150px;
+  border-radius: 80px;
+}
+.hide-file-path{
+  visibility:hidden;
+  max-height: 0;
+}
+.file-field{
+  text-align: center;
+}
+.unfollowImage{
+  width: 100px;
+  height: 100px;
+  border-radius: 80px;
+  margin-top: 30px;
+}
+.profileHeader{
+  display:flex;
+  justify-content: space-around;
+  margin:18px 0;
+  flex-wrap: wrap;
+  border-bottom:1px solid grey;
+  padding-bottom: 25px;
+}
+.profileName{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width:120%;
+  align-items: center;
+}
+.profileData{
+  display: flex;
+  justify-content: space-between;
+  width:108%;
+}
+.profileGallery{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.item{
+  width:30%;
+  margin-bottom: 10px;
+}
+.profilePage{
+  max-width: 70%;
+  margin:0px auto;
+}
+.home{
+  /* max-width: 90%; */
+  margin: 40px auto;
+}
+
+.home-card{
+  max-width: 500px;
+  height:max-content;
+  margin: 20px auto; 
+  padding: 20px;
+}
+.home-card img{
+  border-radius: 10px !important;
+  margin-top: 20px;
+}
+
+.postOptions{
+  float:right;
+  font-size: 23px;
+  cursor:pointer;
+}
+
+#toast-container{
+  top:50px !important;
+  right:20px !important;
+}
+
+p{
+  font-size: 14px;
+}
+
+h6{
+  font-weight: 500;
+}
+
+.comment-form{
+  position:relative;
+}
+.comment-form > i{
+  position:absolute;
+  right:5px;
+  bottom:15px;
+  cursor:pointer;
+  font-size: 21px;
+}
+
+.comment-form > input{
+  display: inline-block;
+  padding-right: 30px !important;
+  width:90% !important;
+}
+
+.userCommented{
+  font-weight: 500;
+}
+
+.comment{
+  position: relative;
+}
+.comment-options{
+  display: none;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 21px;
+}
+.comment:hover .comment-options{
+  display:inline-block ;
+}
+
+
+/* Modal styles */
+.modal .modal-footer{
+  display: none;
+}
+
+.modal{
+  width: 260px;
+  border-radius: 12px;
+  top:40% !important;
+}
+.true{
+  top:30% !important;
+}
+.modal .modal-content{
+  padding: 0;
+}
+.modal h4{
+  display: none;
+}
+
+.true h4{
+  display: block;
+  text-align: center;
+}
+.modal .modal-button{
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 4px 8px;
+  min-height: 48px;
+  border-top: 1px solid #dbdbdb;
+  text-align: center;
+
+}
+
+.redButton{
+  color: #ed4956;
+  font-weight: 650;
+}
