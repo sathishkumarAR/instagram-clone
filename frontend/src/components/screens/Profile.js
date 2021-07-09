@@ -103,24 +103,17 @@ function Profile(){
                                 console.log(event.target.files);
                                 setPhoto(event.target.files[0]);
                             }} />
-                        {/* <input type="file" onChange={(event)=>{
-                            console.log(event.target.files);
-                            setPhoto(event.target.files[0]);
-                        }} /> */}
                     </div>
                     <div class="file-path-wrapper hide-file-path">
                         <input class="file-path validate" type="text"/>
                     </div>
                 </div>
-                        {/* <div >
-                            <img className="profileImage" src={state.profilePhoto} alt="" />
-                        </div> */}
                         <div>
                             <h4>{state?state.name:"loading..."}</h4>
                             <div className="profileData">
-                                <h6><span>{myposts.length}</span> posts</h6>
-                                <h6><span>{state?state.followers.length:"0"}</span> followers</h6>
-                                <h6><span>{state?state.following.length:"0"}</span> following</h6>
+                                <h6 className="fw400"><span>{myposts.length}</span> posts</h6>
+                                <h6 className="fw400"><span>{state?state.followers.length:"0"}</span> followers</h6>
+                                <h6 className="fw400"><span>{state?state.following.length:"0"}</span> following</h6>
                             </div>
                         </div>
                     </div>

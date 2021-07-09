@@ -164,19 +164,15 @@ function UserProfile(){
                         <Modal 
                                 userId={userProfile.user._id}
                                 text={<i className="material-icons postOptions" >more_horiz</i>} 
-                                // delete={()=>{deletePost(post._id)}}
                                 options={userOptions}
                              />
-
-                        {/* <button className="btn blueButton followButton" onClick={()=>{follow()}}>Follow</button> */}
-                        {/* <Modal class="material-icons postOptions" elem={userProfile.user._id}  /> */}
 
                     </div>
                     
                     <div className="profileData">
-                        <h6><span>{userProfile.posts.length}</span> posts</h6>
-                        <h6><span>{userProfile.user.followers.length}</span> followers</h6>
-                        <h6><span>{userProfile.user.following.length}</span> following</h6>
+                        <h6 className="fw400"><span>{userProfile.posts.length}</span> posts</h6>
+                        <h6 className="fw400"><span>{userProfile.user.followers.length}</span> followers</h6>
+                        <h6 className="fw400"><span>{userProfile.user.following.length}</span> following</h6>
                     </div>
                 </div>
             </div>

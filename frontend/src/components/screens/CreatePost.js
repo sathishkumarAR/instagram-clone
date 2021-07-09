@@ -71,10 +71,18 @@ function CreatePost(){
 
 
     return(
-        <div className="mycard">
+        <>
+        {state?
+            <div className="mycard">
             <div className="card auth-card input-field">
-                <h5 style={{textAlign:"left"}}><Link to="/profile" >{state?state.name:"loading..."}</Link></h5>
-                <textarea rows="3" cols="50" onChange={(event)=>{
+                <div className="post-postedBy">
+                    <img className="post-postedBy-img" src={state.profilePhoto} alt="" />
+                    <h6 className="post-postedBy-name">
+                    <Link to="/profile" >{state?state.name:"loading..."}</Link>
+                    </h6>
+                </div>
+                {/* <h6 className="createPost-name"><Link to="/profile" >{state?state.name:"loading..."}</Link></h6> */}
+                <textarea className="create-caption" rows="3" cols="50" onChange={(event)=>{
                     setCaption(event.target.value)
                 }} placeholder="Write something ..." value={caption}></textarea>
 
@@ -96,6 +104,9 @@ function CreatePost(){
             </div>
 
         </div>
+         :"loading..."}
+        </>
+        
         
     );
 }

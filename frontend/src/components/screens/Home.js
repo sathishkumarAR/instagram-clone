@@ -188,19 +188,23 @@ function Home(){
                 posts.map(post=>{
                     return(
                         <div className="card home-card">
-                            <h6><Link to={post.postedBy._id!==state._id?"/profile/"+post.postedBy._id:"/profile"}>{post.postedBy.name}</Link>
-
-                            
-                             <Modal 
-                                header=''
-                                userId={post.postedBy._id}
-                                text={<i className="material-icons postOptions" >more_horiz</i>} 
-                                delete={()=>{deletePost(post._id)}}
-                                options={postOptions}
-                             />
-                             </h6>
+                            <div className="post-header">
+                                <div className="post-postedBy">
+                                    <img className="post-postedBy-img" src={state.profilePhoto} alt="" />
+                                    <h6 className="post-postedBy-name">
+                                        <Link to={post.postedBy._id!==state._id?"/profile/"+post.postedBy._id:"/profile"}>{post.postedBy.name}</Link>
+                                    </h6>
+                                </div>
+                                <Modal 
+                                    header=''
+                                    userId={post.postedBy._id}
+                                    text={<i className="material-icons postOptions" >more_horiz</i>} 
+                                    delete={()=>{deletePost(post._id)}}
+                                    options={postOptions}
+                                />
+                             </div>
                             <div className="card-image">
-                                <img src={post.photo} alt="" />
+                                <img className="post-image" src={post.photo} alt="" />
                             </div>
                             <div className="card-content">
                                 {

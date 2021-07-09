@@ -110,6 +110,24 @@ textarea{
   box-shadow: none;
 }
 
+.searchbox{
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 4px !important;
+  line-height: 0;
+  height: 15px !important;
+  /* width: calc(100% - 2.5rem) !important; */
+  max-width: 120px;
+  /* background-color: rgb(236, 231, 231) !important; */
+  color: black; 
+  box-sizing: border-box;
+  border:1px solid grey !important;
+  box-shadow: none;
+  padding: 5px 10px !important;
+}
+.navbar-icon{
+  font-size: 27px !important;
+}
 .auth-card{
   padding:20px;
   text-align: center;
@@ -132,6 +150,14 @@ textarea{
   height:150px;
   border-radius: 80px;
 }
+.post-postedBy-img{
+  height: 32px;
+  width: 32px;
+  border-radius: 50% !important;
+}
+.post-postedBy-name{
+  margin:0.8rem
+}
 .hide-file-path{
   visibility:hidden;
   max-height: 0;
@@ -147,7 +173,7 @@ textarea{
 }
 .profileHeader{
   display:flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin:18px 0;
   flex-wrap: wrap;
   border-bottom:1px solid grey;
@@ -179,7 +205,6 @@ textarea{
   margin:0px auto;
 }
 .home{
-  /* max-width: 90%; */
   margin: 40px auto;
 }
 
@@ -189,11 +214,26 @@ textarea{
   margin: 20px auto; 
   padding: 20px;
 }
-.home-card img{
+.create-caption{
+  margin-top: 20px;
+}
+
+.post-image{
   border-radius: 10px !important;
   margin-top: 20px;
 }
 
+.post-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.post-postedBy{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 22%;
+}
 .postOptions{
   float:right;
   font-size: 23px;
@@ -209,8 +249,11 @@ p{
   font-size: 14px;
 }
 
-h6{
+h6,h6 span{
   font-weight: 500;
+}
+.fw400{
+  font-weight: 400;
 }
 
 .comment-form{
@@ -284,7 +327,10 @@ h6{
   text-align: center;
 
 }
+.createPost-name{
 
+  text-align:left;
+}
 .redButton{
   color: #ed4956;
   font-weight: 650;

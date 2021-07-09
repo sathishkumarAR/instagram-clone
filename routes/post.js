@@ -10,6 +10,7 @@ router.get("/allposts",requireLogin,(req,res)=>{
     Post.find()
         .populate("postedBy", "_id name")
         .populate("comments.postedBy","_id name")
+        .sort("-createdAt")
         .then(posts=>{
             res.json({posts:posts});
         })
@@ -22,6 +23,7 @@ router.get("/myposts",requireLogin,(req,res)=>{
     // console.log(__dirname);
     Post.find({"postedBy":req.user._id})
         .populate("postedBy","_id name")
+        .sort("-createdAt")
         .then(posts=>{
             res.json({posts:posts});
         })
@@ -36,6 +38,7 @@ router.get("/posts",requireLogin,(req,res)=>{
     Post.find({postedBy:{$in:req.user.following}})
         .populate("postedBy", "_id name")
         .populate("comments.postedBy","_id name")
+        .sort("-createdAt")
         .then(posts=>{
             res.json({posts:posts});
         })
