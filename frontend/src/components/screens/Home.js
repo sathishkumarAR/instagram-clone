@@ -185,12 +185,12 @@ function Home(){
     return (
         <div className="home">
             {
-                posts.map(post=>{
+                posts.map((post,index)=>{
                     return(
-                        <div className="card home-card">
+                        <div key={index} className="card home-card">
                             <div className="post-header">
                                 <div className="post-postedBy">
-                                    <img className="post-postedBy-img" src={state.profilePhoto} alt="" />
+                                    <img className="post-postedBy-img" src={post.postedBy.profilePhoto} alt="" />
                                     <h6 className="post-postedBy-name">
                                         <Link to={post.postedBy._id!==state._id?"/profile/"+post.postedBy._id:"/profile"}>{post.postedBy.name}</Link>
                                     </h6>

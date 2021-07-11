@@ -11,8 +11,12 @@ a{
   text-align: center;
   font-size: 4rem;
 }
+nav{
+  background-color: white;
+}
 nav .nav-wrapper{
-  padding-right: 30px;
+  max-width: 975px;
+  margin: 0 auto !important;
 }
 nav .brand-logo{
   font-family: 'Grand Hotel', cursive;
@@ -110,20 +114,30 @@ textarea{
   box-shadow: none;
 }
 
-.searchbox{
+.search-input{
   text-transform: none;
-  font-weight: 600;
+  font-weight: 400;
   border-radius: 4px !important;
   line-height: 0;
   height: 15px !important;
-  /* width: calc(100% - 2.5rem) !important; */
-  max-width: 120px;
-  /* background-color: rgb(236, 231, 231) !important; */
+  max-width: 150px;
+  margin: 0 auto;
   color: black; 
   box-sizing: border-box;
   border:1px solid grey !important;
   box-shadow: none;
   padding: 5px 10px !important;
+}
+.search-input:focus{
+  border-bottom: none !important;
+  box-shadow: none !important;
+  border: 1px solid grey !important;
+}
+
+
+
+li{
+  vertical-align: baseline;
 }
 .navbar-icon{
   font-size: 27px !important;
@@ -328,7 +342,6 @@ h6,h6 span{
 
 }
 .createPost-name{
-
   text-align:left;
 }
 .redButton{

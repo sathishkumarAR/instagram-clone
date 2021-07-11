@@ -13,7 +13,6 @@ function Profile(){
     const history= useHistory();
 
     useEffect(()=>{
-        console.log("inside UseEffect")
         if(photoURL){
             fetch("/profilePhoto",{
                 method:"put",
@@ -94,7 +93,7 @@ function Profile(){
 
 
                    
-                <div class="file-field">
+                <div className="file-field">
                     <div title="Change Profile Picture">
                     <div >
                             <img className="profileImage" src={state.profilePhoto} alt="" />
@@ -104,8 +103,8 @@ function Profile(){
                                 setPhoto(event.target.files[0]);
                             }} />
                     </div>
-                    <div class="file-path-wrapper hide-file-path">
-                        <input class="file-path validate" type="text"/>
+                    <div className="file-path-wrapper hide-file-path">
+                        <input className="file-path validate" type="text"/>
                     </div>
                 </div>
                         <div>
@@ -120,9 +119,9 @@ function Profile(){
                     <div className="profileGallery">
 
                         {
-                            myposts.map(post=>{
+                            myposts.map((post,index)=>{
                                 return(
-                                    <img className="item" src={post.photo} alt="" />
+                                    <img key={index} className="item" src={post.photo} alt="" />
                                 )
                                 
                             })

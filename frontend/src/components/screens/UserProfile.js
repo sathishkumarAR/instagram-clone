@@ -146,12 +146,12 @@ function UserProfile(){
                         </h4>
 
                         
-                        
+                        {/* .outerHTML converts HTML element to a string */}
                         {(userProfile.user.followers.includes(state._id))?
                             <Modal 
                                 needHeader="true"
-                                header={<div><img className="unfollowImage" 
-                                src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.name+"?"}</p></div>}
+                                header={(<div><img className="unfollowImage" 
+                                src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.name+"?"}</p></div>).outerHTML}
                                 userId={userProfile.user._id}
                                 text={<button className="btn unfollowButton">Unfollow</button>} 
                                 unfollow={()=>{unfollow()}}
@@ -179,9 +179,9 @@ function UserProfile(){
 
             <div className="profileGallery">
                 {
-                    userProfile.posts.map(post=>{
+                    userProfile.posts.map((post,index)=>{
                         return(
-                            <img className="item" src={post.photo} alt="" />
+                            <img key={index} className="item" src={post.photo} alt="" />
                         )
                         
                     })

@@ -104,4 +104,32 @@ router.put("/profilePhoto",requireLogin,(req,res)=>{
     })
 });
 
+router.post("/search-users",requireLogin,(req,res)=>{
+    const pattern=new RegExp("^"+req.body.query);
+    User.find({name:{$regex:pattern}})
+        .select("_id name profilePhoto")
+        .then(result=>{
+            let users={}
+            result.forEach(data => {
+                users[data.name]=data.profilePhoto
+            });
+            // console.log(users)
+            return res.json(users);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+})
+
+router.post("/getID",requireLogin,(req,res)=>{
+    User.findOne({name:req.body.name})
+        .select("_id")
+        .then(userID=>{
+            res.json(userID);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+})
+
 module.exports=router;

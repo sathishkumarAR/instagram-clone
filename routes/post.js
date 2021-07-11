@@ -8,8 +8,8 @@ const Post=mongoose.model("Post");
 
 router.get("/allposts",requireLogin,(req,res)=>{
     Post.find()
-        .populate("postedBy", "_id name")
-        .populate("comments.postedBy","_id name")
+        .populate("postedBy", "_id name profilePhoto")
+        .populate("comments.postedBy","_id name profilePhoto")
         .sort("-createdAt")
         .then(posts=>{
             res.json({posts:posts});
@@ -22,7 +22,7 @@ router.get("/allposts",requireLogin,(req,res)=>{
 router.get("/myposts",requireLogin,(req,res)=>{
     // console.log(__dirname);
     Post.find({"postedBy":req.user._id})
-        .populate("postedBy","_id name")
+        .populate("postedBy","_id name profilePhoto")
         .sort("-createdAt")
         .then(posts=>{
             res.json({posts:posts});
@@ -36,8 +36,8 @@ router.get("/myposts",requireLogin,(req,res)=>{
 router.get("/posts",requireLogin,(req,res)=>{
     // console.log(req.headers)
     Post.find({postedBy:{$in:req.user.following}})
-        .populate("postedBy", "_id name")
-        .populate("comments.postedBy","_id name")
+        .populate("postedBy", "_id name profilePhoto")
+        .populate("comments.postedBy","_id name profilePhoto")
         .sort("-createdAt")
         .then(posts=>{
             res.json({posts:posts});
@@ -79,8 +79,8 @@ router.put("/like", requireLogin,(req,res)=>{
     },{
         new:true
     })
-    .populate("postedBy","_id name")
-    .populate("comments.postedBy","_id name")
+    .populate("postedBy","_id name profilePhoto")
+    .populate("comments.postedBy","_id name profilePhoto")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err})
@@ -95,8 +95,8 @@ router.put("/unlike", requireLogin,(req,res)=>{
     },{
         new:true
     })
-    .populate("postedBy","_id name")
-    .populate("comments.postedBy","_id name")
+    .populate("postedBy","_id name profilePhoto")
+    .populate("comments.postedBy","_id name profilePhoto")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err})
@@ -117,8 +117,8 @@ router.put("/comment", requireLogin,(req,res)=>{
         },{
             new:true
         })
-        .populate("postedBy","_id name")
-        .populate("comments.postedBy","_id name")
+        .populate("postedBy","_id name profilePhoto")
+        .populate("comments.postedBy","_id name profilePhoto")
         .exec((err,result)=>{
             if(err){
                 return res.status(422).json({error:err})
