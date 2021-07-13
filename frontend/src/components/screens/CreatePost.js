@@ -9,14 +9,21 @@ import {UserContext} from "../../App";
 function CreatePost(){
     const [caption,setCaption]=useState();
     const [photo,setPhoto]=useState();
+    const [isLoading,setIsLoading]=useState(false);
     const [photoURL,setPhotoURL]=useState();
     const [userName, setUserName]=useState();
     const history= useHistory();
     const {state,dispatch}= useContext(UserContext);
 
-    useEffect(()=>{
-        console.log("inside CreatePost UseEffect")
-        if(photoURL){
+    // useEffect(()=>{
+    //     console.log("inside CreatePost UseEffect")
+        
+    // },[photoURL]);
+
+    function postData(){
+        return(
+            photoURL?
+            
             fetch("/createpost",{
                 method:"post",
                 headers:{
@@ -43,10 +50,36 @@ function CreatePost(){
             .catch(err=>{
                 console.log(err);
             })
+            :
+            <div class="progress">
+                <div class="indeterminate" style={{width: "70%"}}></div>
+            </div>
+        )
+        
         }
-    },[photoURL]);
 
-    function postData(){
+    // function getSecureURL(){
+    //     if(photo){
+    //         const imageData= new FormData();
+    //         imageData.append("file",photo);
+    //         imageData.append("upload_preset","insta-clone");
+    //         imageData.append("cloud_name","wings05");
+
+    //         fetch("https://api.cloudinary.com/v1_1/wings05/image/upload",{
+    //             method:"post",
+    //             body:imageData
+    //         })
+    //         .then(res=>res.json())
+    //         .then(data=>{
+    //             setPhotoURL(data.secure_url);
+    //         })
+    //         .catch(err=>{
+    //             console.log(err);
+    //         })
+    //     }  
+    // }
+    useEffect(()=>{
+        setIsLoading(true);
         const imageData= new FormData();
         imageData.append("file",photo);
         imageData.append("upload_preset","insta-clone");
@@ -59,16 +92,12 @@ function CreatePost(){
         .then(res=>res.json())
         .then(data=>{
             setPhotoURL(data.secure_url);
+            setIsLoading(false)
         })
         .catch(err=>{
             console.log(err);
         })
-
-        
-    }
-
-    
-
+    },[photo])
 
     return(
         <>
@@ -81,7 +110,27 @@ function CreatePost(){
                     <Link to="/profile" >{state?state.name:"loading..."}</Link>
                     </h6>
                 </div>
-                {/* <h6 className="createPost-name"><Link to="/profile" >{state?state.name:"loading..."}</Link></h6> */}
+                {
+                
+                    !isLoading ?
+                    (<div className="card-image">
+                        <img className="post-image" src={photoURL} alt="" />
+                    </div>):
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-green-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                            </div>
+                        </div>
+                    
+                    
+                }
+                
                 <textarea className="create-caption" rows="3" cols="50" onChange={(event)=>{
                     setCaption(event.target.value)
                 }} placeholder="Write something ..." value={caption}></textarea>
