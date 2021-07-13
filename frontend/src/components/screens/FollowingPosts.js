@@ -15,20 +15,20 @@ function FollowingPosts(){
         {
             name:"Report",
             strict:false,
-            className:"modal-button redButton",
+            className:"modal-button redButton pointer",
             action:()=>{}
 
         },
         {
             name:"Delete",
             strict:true,
-            className:"modal-button modal-close redButton",
+            className:"modal-button modal-close redButton pointer",
             action:()=>{}
         },
         {
             name:"Cancel",
             strict:false,
-            className:"modal-button modal-close",
+            className:"modal-button modal-close pointer",
             action:()=>{}
         }
     ]
@@ -195,7 +195,7 @@ function FollowingPosts(){
                                 <Modal 
                                     header=''
                                     userId={post.postedBy._id}
-                                    text={<i className="material-icons postOptions" >more_horiz</i>} 
+                                    trigger={<i className="material-icons postOptions pointer" >more_horiz</i>} 
                                     delete={()=>{deletePost(post._id)}}
                                     options={postOptions}
                                 />
@@ -223,7 +223,7 @@ function FollowingPosts(){
                                              <Modal 
                                                 header=''
                                                 userId={comment.postedBy._id}
-                                                text={<i className="material-icons comment-options" >more_horiz</i>} 
+                                                trigger={<i className="material-icons comment-options pointer" >more_horiz</i>} 
                                                 delete={()=>{deleteComment(post._id,comment._id)}}
                                                 options={postOptions}
                                             />                                            
@@ -240,7 +240,7 @@ function FollowingPosts(){
                                         setComment(e.target.value)
                                     }} placeholder="Add a comment"></input>
                                     
-                                    <i class="material-icons" onClick={(e)=>{
+                                    <i class="material-icons pointer" onClick={(e)=>{
                                         e.preventDefault();
                                         // console.log(comment);
                                         addComment(comment,post._id);

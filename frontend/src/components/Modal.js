@@ -12,18 +12,26 @@ function CustomModal(props){
             <Modal className={props.needHeader}
                 
                 header={props.header}
-                trigger={props.text}>
+                trigger={props.trigger}>
                 {
                     props.options.map((button,index)=>{
                         return(
-                            (button.strict)?(props.userId===state._id &&  <button key={index} className={button.className} onClick={()=>{
-                            (button.name==="Delete") ? props.delete():button.action()
-                            }}>{button.name}</button>):<button key={index} className={button.className} onClick={()=>{
-                                //add chains for new functions
-                             (button.name==="Delete") ? props.delete():
-                             (button.name==="Unfollow") ? props.unfollow():
-                             button.action()
-                            }}>{button.name}</button>
+                            (button.strict)?
+                                (props.userId===state._id &&  <button key={index} className={button.className} onClick={()=>{
+                                    (button.name==="Delete") ? 
+                                    props.delete():button.action()
+                                    }}>{button.name}</button>)
+                                :
+                                <button key={index} className={button.className} onClick={(e)=>{
+                                    //add chains for new functions
+                                    (button.name==="Delete") ? props.delete():
+                                    (button.name==="Unfollow") ? props.unfollow():
+                                    (button.name==="Upload Photo")?props.upload(e):
+                                    (button.name==="Remove Current Photo")?props.remove():
+                                    
+                                    button.action()
+                                    }}>{button.name}
+                                </button>
                         )
                     })
                 }

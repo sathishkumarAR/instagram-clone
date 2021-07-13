@@ -132,4 +132,18 @@ router.post("/getID",requireLogin,(req,res)=>{
         })
 })
 
+router.put("/removeProfilePhoto",requireLogin,(req,res)=>{
+    User.findByIdAndUpdate(req.user._id,{
+        $set:{profilePhoto:"https://res.cloudinary.com/wings05/image/upload/v1625411692/44884218_345707102882519_2446069589734326272_n_u82kmh.jpg" }
+    },{new:true})
+    .select("_id name profilePhoto")
+    .exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
+    })
+})
+
 module.exports=router;

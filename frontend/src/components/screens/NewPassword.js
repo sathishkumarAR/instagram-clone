@@ -77,7 +77,9 @@ function NewPassword(){
 
     return (
         <>
-        {(linkexpired===undefined)?"loading...":
+        {(linkexpired===undefined)?<div class="progress">
+        <div class="indeterminate" style={{width: "70%"}}></div>
+    </div>:
         linkexpired?<LinkExpired />:
         <div className="mycard">
             <div className="card auth-card input-field">

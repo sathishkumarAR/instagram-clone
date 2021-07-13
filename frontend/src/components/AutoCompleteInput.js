@@ -50,8 +50,9 @@ function AutoCompleteInput(){
             //   console.log("Completed");
               let input = document.getElementById("autocomplete-input");
             //   console.log(input.value);
+            setSearch(input.value)
               setSelectedUser(input.value);
-              setSearch("")
+              
             },
       
             //Minimum number of characters before autocomplete starts.
@@ -83,6 +84,7 @@ function AutoCompleteInput(){
                 else{
                     window.location="/profile/"+res._id;
                 }
+                setSearch("")
             })
             .catch(err=>{
                 console.log(err);

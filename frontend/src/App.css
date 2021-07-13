@@ -71,11 +71,14 @@ textarea{
   margin-bottom: 10px;
   box-shadow: none;
 }
+.mb-inherit{
+  margin-bottom: inherit;
+}
 .blueLink.dark a{
   color: #385185 !important;
   font-weight: 600;
 }
-.blueLink.light a{
+.blueLink.light, .blueLink.light a{
   color: #0095f6 !important;
   font-weight: 600;
 }
@@ -134,7 +137,13 @@ textarea{
   border: 1px solid grey !important;
 }
 
-
+.progress{
+  margin-top: 1px;
+  background-color: #0095f6;
+}
+.indeterminate{
+  background-color: white !important;
+}
 
 li{
   vertical-align: baseline;
@@ -155,6 +164,11 @@ li{
 .heading-text{
   font-size: 1.5rem;
   font-weight: 600;
+}
+.changeProfilePhoto-header{
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 30px auto;
 }
 .link{
   color:aqua;
@@ -251,7 +265,9 @@ li{
 .postOptions{
   float:right;
   font-size: 23px;
-  cursor:pointer;
+}
+.pointer{
+  cursor: pointer;
 }
 
 #toast-container{
@@ -269,6 +285,9 @@ h6,h6 span{
 .fw400{
   font-weight: 400;
 }
+.fw650{
+  font-weight: 650 !important;
+}
 
 .comment-form{
   position:relative;
@@ -277,7 +296,6 @@ h6,h6 span{
   position:absolute;
   right:5px;
   bottom:15px;
-  cursor:pointer;
   font-size: 21px;
 }
 
@@ -298,7 +316,6 @@ h6,h6 span{
   display: none;
   position: absolute;
   right: 10px;
-  cursor: pointer;
   font-size: 21px;
 }
 .comment:hover .comment-options{
@@ -312,7 +329,9 @@ h6,h6 span{
 }
 
 .modal{
-  width: 260px;
+  width: 30%;
+  max-width: 300px;
+  min-width: 260px;
   border-radius: 12px;
   top:40% !important;
 }
@@ -334,7 +353,6 @@ h6,h6 span{
   width: 100%;
   border: none;
   background-color: transparent;
-  cursor: pointer;
   padding: 4px 8px;
   min-height: 48px;
   border-top: 1px solid #dbdbdb;
@@ -346,5 +364,4 @@ h6,h6 span{
 }
 .redButton{
   color: #ed4956;
-  font-weight: 650;
 }

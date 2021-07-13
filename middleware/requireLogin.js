@@ -8,7 +8,6 @@ module.exports=(req,res,next)=>{
     // console.log(req.method);
     const authorization=req.header("authorization");
 
-    console.log(authorization);
     //if the user is not logged in, authorization field in headers will be empty
 
     if(!authorization){

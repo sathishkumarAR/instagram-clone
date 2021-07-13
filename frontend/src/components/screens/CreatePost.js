@@ -102,13 +102,14 @@ function CreatePost(){
                     Post
                 </button>
             </div>
-
         </div>
-         :"loading..."}
+         :<div class="progress">
+            <div class="indeterminate" style={{width: "70%"}}></div>
+        </div>}
         </>
         
         
-    );
+    )
 }
 
 export default CreatePost;

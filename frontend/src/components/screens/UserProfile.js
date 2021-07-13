@@ -10,21 +10,21 @@ function UserProfile(){
         {
             name:"Report",
             strict:false,
-            className:"modal-button redButton",
+            className:"modal-button redButton pointer fw650",
             action:()=>{}
 
         },
         {
             name:"Block",
             strict:false,
-            className:"modal-button redButton",
+            className:"modal-button redButton pointer fw650",
             action:()=>{}
 
         },
         {
             name:"Cancel",
             strict:false,
-            className:"modal-button modal-close",
+            className:"modal-button modal-close pointer",
             action:()=>{}
         }
     ];
@@ -32,14 +32,14 @@ function UserProfile(){
         {
             name:"Unfollow",
             strict:false,
-            className:"modal-button redButton",
+            className:"modal-button redButton pointer fw650",
             action:()=>{}
 
         },
         {
             name:"Cancel",
             strict:false,
-            className:"modal-button modal-close",
+            className:"modal-button modal-close pointer",
             action:()=>{}
         }
     ]
@@ -142,28 +142,29 @@ function UserProfile(){
                 <div>
                     <div className="profileName">
                         <h4>
-                            {userProfile.user.name?userProfile.user.name:"loading..."}
+                            {userProfile.user.name?userProfile.user.name:<div class="progress">
+        <div class="indeterminate" style={{width: "70%"}}></div>
+    </div>}
                         </h4>
 
                         
-                        {/* .outerHTML converts HTML element to a string */}
                         {(userProfile.user.followers.includes(state._id))?
                             <Modal 
                                 needHeader="true"
                                 header={(<div><img className="unfollowImage" 
-                                src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.name+"?"}</p></div>).outerHTML}
+                                src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.name+"?"}</p></div>)}
                                 userId={userProfile.user._id}
-                                text={<button className="btn unfollowButton">Unfollow</button>} 
+                                trigger={<button className="btn unfollowButton">Unfollow</button>} 
                                 unfollow={()=>{unfollow()}}
                                 options={unfollowOptions}
                             />
                             :
-                            <button className="btn blueButton followButton" onClick={()=>{follow()}}>Follow</button>
+                            <button className="btn blueButton mb-inherit followButton" onClick={()=>{follow()}}>Follow</button>
                         }
 
                         <Modal 
                                 userId={userProfile.user._id}
-                                text={<i className="material-icons postOptions" >more_horiz</i>} 
+                                trigger={<i className="material-icons postOptions pointer" >more_horiz</i>} 
                                 options={userOptions}
                              />
 
@@ -188,7 +189,9 @@ function UserProfile(){
                 }
             </div>
             
-        </div> :"loading!"}
+        </div> :<div class="progress">
+        <div class="indeterminate" style={{width: "70%"}}></div>
+    </div>}
         </>
         
     );

@@ -13,20 +13,10 @@ function Navbar(){
             <nav>
                 <div className="nav-wrapper white">
                 <div>
-                <Link to="/" className="brand-logo left">Instagram</Link>
+                <Link to="/" className="brand-logo left">Instaclone</Link>
                 </div>
                 <div>
                 <ul id="nav-mobile" className="right">
-                    {/* <li>
-                        <input type="text" id="autocomplete-input" placeholder="Search" className="search-input autocomplete" />
-                        <label for="autocomplete-input">Autocomplete</label>
-                        <ul class="collection">
-                            <li class="collection-item">Alvin</li>
-                            <li class="collection-item">Alvin</li>
-                            <li class="collection-item">Alvin</li>
-                            <li class="collection-item">Alvin</li>
-                        </ul>
-                    </li> */}
                     <li>
                         <AutoCompleteInput/>
                     </li>
