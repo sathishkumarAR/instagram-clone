@@ -1,11 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import {useParams} from "react-router-dom";
-import Modal from "../Modal";
+import OptionsModal from "../Modals/OptionsModal";
+import ProfileItem from "../ProfileItem";
+import {Modal} from "react-materialize";
 
 function UserProfile(){
 
     const {state, dispatch}=useContext(UserContext);
+    const [userProfile, setUserProfile]=useState(null);
+
+    const [followers,setFollowers]=useState(undefined);
+    const [followingUsers, setFollowingUsers]=useState(undefined);
+
     const userOptions=[
         {
             name:"Report",
@@ -45,7 +52,7 @@ function UserProfile(){
     ]
 
     const {userId}=useParams();
-    const [userProfile, setUserProfile]=useState(null);
+    
 
     useEffect(()=>{
         fetch("/user/"+userId,{
@@ -131,6 +138,43 @@ function UserProfile(){
         )
     }
 
+    function getFollowers(){
+
+        return(
+            fetch(`/getFollowers?userId=${userProfile.user._id}`,{
+                method:"get",
+                headers:{
+                    "Authorization":"Bearer "+localStorage.getItem("jwt")
+                }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                setFollowers(data);
+            })
+            .catch(err=>{
+                console.log({error:err})
+            })
+        )  
+    }
+
+    function getFollowing(){
+        return(
+            fetch(`/getFollowing?userId=${userProfile.user._id}`,{
+                method:"get",
+                headers:{
+                    Authorization:"Bearer "+localStorage.getItem("jwt"),
+                }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                setFollowingUsers(data);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        )
+    }
+
     return (
         <>
         {userProfile? <div className="profilePage">
@@ -149,7 +193,7 @@ function UserProfile(){
 
                         
                         {(userProfile.user.followers.includes(state._id))?
-                            <Modal 
+                            <OptionsModal 
                                 needHeader="true"
                                 header={(<div><img className="unfollowImage" 
                                 src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.name+"?"}</p></div>)}
@@ -162,7 +206,7 @@ function UserProfile(){
                             <button className="btn blueButton mb-inherit followButton" onClick={()=>{follow()}}>Follow</button>
                         }
 
-                        <Modal 
+                        <OptionsModal 
                                 userId={userProfile.user._id}
                                 trigger={<i className="material-icons postOptions pointer" >more_horiz</i>} 
                                 options={userOptions}
@@ -172,8 +216,48 @@ function UserProfile(){
                     
                     <div className="profileData">
                         <h6 className="fw400"><span>{userProfile.posts.length}</span> posts</h6>
-                        <h6 className="fw400"><span>{userProfile.user.followers.length}</span> followers</h6>
-                        <h6 className="fw400"><span>{userProfile.user.following.length}</span> following</h6>
+                        
+                        <h6 className="fw400" onClick={()=>{getFollowers()}}> 
+                            <Modal className="true followModal"
+                    
+                                header={<div><h3 className="heading-text-small">Followers</h3><hr></hr></div>}
+                                trigger={<div className="pointer" ><span>{userProfile.user.followers.length}</span> followers</div>}>
+                                {   
+                                    followers &&
+                                        (
+                                            followers.length===0 ?
+                                            <p>No followers</p>
+                                            :
+                                            followers.map((follower,index)=>{
+                                                    return <ProfileItem key={index} user={follower}/> 
+                                            })
+                                        )
+                                }
+                            </Modal>
+                        </h6>
+
+                        <h6 className="fw400" onClick={()=>{getFollowing()}}>
+                                
+                            <Modal className="true followModal"
+            
+                                header={<div><h3 className="heading-text-small">Following</h3><hr></hr></div>}
+                                trigger={<div className="pointer"><span>{userProfile.user.following.length}</span> following</div>}>
+                                {   
+                                    
+                                    followingUsers &&
+                                        (   
+                                            followingUsers.length===0 ?
+                                            <p>No following</p>
+                                            :
+                                            followingUsers.map((user,index)=>{
+                                                    return <ProfileItem key={index} user={user}/> 
+                                            })
+                                        )
+                                }
+                            </Modal>
+                                
+                        </h6>
+
                     </div>
                 </div>
             </div>
@@ -189,8 +273,8 @@ function UserProfile(){
                 }
             </div>
             
-        </div> :<div class="progress">
-        <div class="indeterminate" style={{width: "70%"}}></div>
+        </div> :<div className="progress">
+        <div className="indeterminate" style={{width: "70%"}}></div>
     </div>}
         </>
         

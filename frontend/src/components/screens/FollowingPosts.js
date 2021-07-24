@@ -2,7 +2,7 @@ import React, { useEffect, useState,useContext } from "react";
 import M from "materialize-css";
 import {UserContext} from "../../App";
 import { useHistory } from "react-router";
-import Modal from "../Modal";  
+import Modal from "../Modals/OptionsModal";  
 import {Link} from "react-router-dom";
 
 
@@ -15,14 +15,14 @@ function FollowingPosts(){
         {
             name:"Report",
             strict:false,
-            className:"modal-button redButton pointer",
+            className:"modal-button redButton fw650 pointer",
             action:()=>{}
 
         },
         {
             name:"Delete",
             strict:true,
-            className:"modal-button modal-close redButton pointer",
+            className:"modal-button modal-close redButton fw650 pointer",
             action:()=>{}
         },
         {

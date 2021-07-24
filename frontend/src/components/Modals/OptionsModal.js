@@ -1,11 +1,11 @@
 
 import React,{useContext} from "react";
-import { UserContext } from "../App";
-import M from "materialize-css";
-import {Modal, Button, Icon} from 'react-materialize';
+import { UserContext } from "../../App";
+// import M from "materialize-css";
+import {Modal} from 'react-materialize';
 
 
-function CustomModal(props){
+function OptionsModal(props){
     const {state, dispatch}= useContext(UserContext);
 
     return(
@@ -39,4 +39,4 @@ function CustomModal(props){
     )
 }
 
-export default CustomModal;
+export default OptionsModal;

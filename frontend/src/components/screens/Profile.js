@@ -1,7 +1,10 @@
-import React, { useContext, useEffect, useState,useRef } from "react";
+import React, { useContext, useEffect, useCallback, useState,useRef } from "react";
 import { useHistory } from "react-router";
 import { UserContext } from "../../App";
-import Modal from "../Modal"
+import OptionsModal from "../Modals/OptionsModal"
+import {Modal} from "react-materialize";
+import ProfileItem from "../ProfileItem";
+import M from "materialize-css";
 
 
 
@@ -12,6 +15,12 @@ function Profile(){
     const [photo,setPhoto]=useState();
     const [photoURL,setPhotoURL]=useState();
     const history= useHistory();
+
+    const [followers,setFollowers]=useState(undefined);
+    const [followingUsers, setFollowingUsers]=useState(undefined);
+    
+    
+
 
     const profilePhotoOptions=[
         {
@@ -106,6 +115,53 @@ function Profile(){
             console.log(err);
         })
     },[])
+    // var instance = M.Modal.getInstance(FollowModal.current);
+    // if(instance.isOpen){
+    //     console.log("working")
+    // }
+   
+    
+
+    function getFollowers(){
+
+        return(
+            fetch(`/getFollowers?userId=${state._id}`,{
+                method:"get",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer "+localStorage.getItem("jwt")
+                }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                setFollowers(data);
+            })
+            .catch(err=>{
+                console.log({error:err})
+            })
+        )
+        
+    }
+
+    function getFollowing(){
+        return(
+            fetch(`/getFollowing?userId=${state._id}`,{
+                method:"get",
+                headers:{
+                    Authorization:"Bearer "+localStorage.getItem("jwt"),
+                }
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                setFollowingUsers(data);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        )
+    }
+
+    
 
     function uploadProfilePhoto(){
         return(
@@ -125,8 +181,6 @@ function Profile(){
         .then(res=>{
             dispatch({type:"UPDATE_PROFILE_PHOTO",payload:{profilePhoto:res.profilePhoto}})
             localStorage.setItem("user",JSON.stringify({...state,profilePhoto:res.profilePhoto}));
-                
-            // console.log(res)
         })
         .catch(err=>{
             console.log(err);
@@ -140,10 +194,7 @@ function Profile(){
                 state?
                 <div className="profilePage">
                     <div className="profileHeader">
-
-                    
-
-                    <Modal 
+                    <OptionsModal 
                         needHeader="true"
                         header={<h6 className="changeProfilePhoto-header">Change Profile Photo</h6>}
                         userId={state._id}
@@ -151,16 +202,14 @@ function Profile(){
                             <div >
                                 <img className="profileImage pointer" src={state.profilePhoto} alt="" />
                             </div>
-                    </div>} 
+                        </div>}
                         upload={()=>{uploadProfilePhoto()}}
                         remove={()=>{removeProfilePhoto()}}
                         options={profilePhotoOptions}
                     />
-
-                    <div className="file-field">
+                    <div className="file-field hide">
                     
                         <input id="upload" type="file" onChange={(event)=>{
-                            // console.log(event.target.files);
                             setPhoto(event.target.files[0]);
                         }} />
                         
@@ -173,8 +222,45 @@ function Profile(){
                             <h4>{state?state.name:"loading..."}</h4>
                             <div className="profileData">
                                 <h6 className="fw400"><span>{myposts.length}</span> posts</h6>
-                                <h6 className="fw400"><span>{state?state.followers.length:"0"}</span> followers</h6>
-                                <h6 className="fw400"><span>{state?state.following.length:"0"}</span> following</h6>
+                                <h6 className="fw400" onClick={()=>{getFollowers()}}>
+                        
+                                <Modal className="true followModal"
+                
+                                    header={<div><h3 className="heading-text-small">Followers</h3><hr></hr></div>}
+                                    trigger={<div className="pointer" ><span>{state?state.followers.length:"0"}</span> followers</div>}>
+                                    {   
+                                        
+                                        followers &&
+                                        (
+                                            followers.length===0 ?
+                                            <p>No followers</p>
+                                            :
+                                            followers.map((follower,index)=>{
+                                                    return <ProfileItem key={index} user={follower}/> 
+                                            })
+                                        )
+                                    }
+                                </Modal>
+                                </h6>
+
+                                <h6 className="fw400" onClick={()=>{getFollowing()}}>
+                                
+                                <Modal className="true followModal"
+                
+                                    header={<div><h3 className="heading-text-small">Following</h3><hr></hr></div>}
+                                    trigger={<div className="pointer"><span>{state?state.following.length:"0"}</span> following</div>}>
+                                    {   
+                                        followingUsers &&
+                                        (    followingUsers.length===0 ?
+                                            <p>No following</p>
+                                            :
+                                            followingUsers.map((user,index)=>{
+                                                    return <ProfileItem key={index} user={user}/> 
+                                            }))
+                                    }
+                                </Modal>
+                                
+                                </h6>
                             </div>
                         </div>
                     </div>

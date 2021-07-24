@@ -165,6 +165,11 @@ li{
   font-size: 1.5rem;
   font-weight: 600;
 }
+.heading-text-small{
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 15px !important;
+}
 .changeProfilePhoto-header{
   font-size: 1.3rem;
   font-weight: 600;
@@ -184,7 +189,10 @@ li{
   border-radius: 50% !important;
 }
 .post-postedBy-name{
-  margin:0.8rem
+  margin:0.8rem;
+}
+.post-postedBy-name:hover{
+  text-decoration: underline;
 }
 .hide-file-path{
   visibility:hidden;
@@ -340,6 +348,7 @@ h6,h6 span{
 }
 .modal .modal-content{
   padding: 0;
+  text-align: center;
 }
 .modal h4{
   display: none;
@@ -365,3 +374,24 @@ h6,h6 span{
 .redButton{
   color: #ed4956;
 }
+
+.followModal{
+  max-height: 400px;
+  min-height: 200px;
+  width: 30%;
+}
+.followModal .modal-content{
+  margin-top: 10px;
+}
+.profileItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 15px;
+}
+.profileItem-left{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

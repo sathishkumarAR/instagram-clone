@@ -16,7 +16,7 @@ function LinkExpired(){
                 <i className="material-icons large warning-icon" >mood_bad</i>
                <h3 className="heading-text">Link Expired</h3>
                <hr></hr>
-               <p  className="blueLink light px16">The password reset link is invalid, possibly because it has already been used or expired. Please request a new <Link to="/reset">password reset</Link>.</p>
+               <p >The password reset link is invalid, possibly because it has already been used or expired. Please request a new <Link  className="blueLink light px16" to="/reset">password reset</Link>.</p>
             </div>
 
         </div>

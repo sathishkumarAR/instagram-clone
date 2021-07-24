@@ -136,8 +136,8 @@ router.delete("/deleteComment/:postId/:commentId",requireLogin,(req,res)=>{
     },{
         new:true
     })
-    .populate("postedBy","_id name")
-    .populate("comments.postedBy","_id name")
+    .populate("postedBy","_id name profilePhoto")
+    .populate("comments.postedBy","_id name profilePhoto")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err});
@@ -145,8 +145,7 @@ router.delete("/deleteComment/:postId/:commentId",requireLogin,(req,res)=>{
         else{
             res.json(result);
         }
-    })
-        
+    })        
 })
 
 router.delete("/deletePost/:postId",requireLogin,(req,res)=>{

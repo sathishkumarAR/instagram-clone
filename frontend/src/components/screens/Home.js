@@ -2,7 +2,7 @@ import React, { useEffect, useState,useContext } from "react";
 import M from "materialize-css";
 import {UserContext} from "../../App";
 import { useHistory } from "react-router";
-import Modal from "../Modal";  
+import Modal from "../Modals/OptionsModal";  
 import {Link} from "react-router-dom";
 
 
@@ -183,11 +183,18 @@ function Home(){
     }
 
     return (
-        <div className="home">
-            {
+        <>
+        {
+            posts?
+
+            (
+                <div className="home">
+            {   
                 posts.map((post,index)=>{
                     return(
                         <div key={index} className="card home-card">
+
+                        
                             <div className="post-header">
                                 <div className="post-postedBy">
                                     <img className="post-postedBy-img" src={post.postedBy.profilePhoto} alt="" />
@@ -203,9 +210,13 @@ function Home(){
                                     options={postOptions}
                                 />
                              </div>
+
+
                             <div className="card-image">
                                 <img className="post-image" src={post.photo} alt="" />
                             </div>
+
+
                             <div className="card-content">
                                 {
                                     post.likes.includes(state._id)? (<i className="material-icons" style={{color:"red", cursor:"pointer"}} onClick={()=>{
@@ -217,6 +228,8 @@ function Home(){
                                 }
                                 <p>{post.likes.length + " likes"}</p>
                                 <p>{post.caption}</p>
+
+                                
                                 {post.comments.map(comment=>{
                                        return(
                                            <p className="comment"  key={comment._id}>
@@ -253,8 +266,17 @@ function Home(){
                         </div>
                     )   
                 })
+                
             }
         </div>
+            )
+            :
+            <div class="progress">
+                <div class="indeterminate" style={{width: "70%"}}></div>
+            </div>
+        }
+        </>
+        
         
     );
 }

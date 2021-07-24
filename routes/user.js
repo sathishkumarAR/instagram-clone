@@ -146,4 +146,30 @@ router.put("/removeProfilePhoto",requireLogin,(req,res)=>{
     })
 })
 
+
+router.get("/getFollowers",requireLogin,(req,res)=>{
+    const userId= req.query.userId;
+    User.find({following:{$in:userId}})
+        .select("name profilePhoto")
+        .then(data=>{
+            return res.json(data);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+})
+
+router.get("/getFollowing", requireLogin, (req,res)=>{
+    const userId= req.query.userId;
+    User.find({followers:{$in:userId}})
+        .select("name profilePhoto")
+        .then(data=>{
+            res.json(data);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+})
+
+
 module.exports=router;
