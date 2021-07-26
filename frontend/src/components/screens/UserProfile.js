@@ -186,7 +186,7 @@ function UserProfile(){
                 <div>
                     <div className="profileName">
                         <h4>
-                            {userProfile.user.name?userProfile.user.name:<div class="progress">
+                            {userProfile.user.username?userProfile.user.username:<div class="progress">
         <div class="indeterminate" style={{width: "70%"}}></div>
     </div>}
                         </h4>
@@ -196,7 +196,7 @@ function UserProfile(){
                             <OptionsModal 
                                 needHeader="true"
                                 header={(<div><img className="unfollowImage" 
-                                src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.name+"?"}</p></div>)}
+                                src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.username+"?"}</p></div>)}
                                 userId={userProfile.user._id}
                                 trigger={<button className="btn unfollowButton">Unfollow</button>} 
                                 unfollow={()=>{unfollow()}}

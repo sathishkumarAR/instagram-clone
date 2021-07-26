@@ -199,7 +199,7 @@ function Home(){
                                 <div className="post-postedBy">
                                     <img className="post-postedBy-img" src={post.postedBy.profilePhoto} alt="" />
                                     <h6 className="post-postedBy-name">
-                                        <Link to={post.postedBy._id!==state._id?"/profile/"+post.postedBy._id:"/profile"}>{post.postedBy.name}</Link>
+                                        <Link to={post.postedBy._id!==state._id?"/profile/"+post.postedBy._id:"/profile"}>{post.postedBy.username}</Link>
                                     </h6>
                                 </div>
                                 <Modal 
@@ -233,7 +233,7 @@ function Home(){
                                 {post.comments.map(comment=>{
                                        return(
                                            <p className="comment"  key={comment._id}>
-                                           <Link to={comment.postedBy._id!==state._id?"/profile/"+comment.postedBy._id:"/profile"}><span className="userCommented">{comment.postedBy.name}</span></Link>
+                                           <Link to={comment.postedBy._id!==state._id?"/profile/"+comment.postedBy._id:"/profile"}><span className="userCommented">{comment.postedBy.username}</span></Link>
                                              
                                              {" "+comment.text}
                                              <Modal 

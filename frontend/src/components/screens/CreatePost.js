@@ -11,14 +11,8 @@ function CreatePost(){
     const [photo,setPhoto]=useState();
     const [isLoading,setIsLoading]=useState(undefined);
     const [photoURL,setPhotoURL]=useState();
-    const [userName, setUserName]=useState();
     const history= useHistory();
     const {state,dispatch}= useContext(UserContext);
-
-    // useEffect(()=>{
-    //     console.log("inside CreatePost UseEffect")
-        
-    // },[photoURL]);
 
     function postData(){
         return(
@@ -58,26 +52,6 @@ function CreatePost(){
         
         }
 
-    // function getSecureURL(){
-    //     if(photo){
-    //         const imageData= new FormData();
-    //         imageData.append("file",photo);
-    //         imageData.append("upload_preset","insta-clone");
-    //         imageData.append("cloud_name","wings05");
-
-    //         fetch("https://api.cloudinary.com/v1_1/wings05/image/upload",{
-    //             method:"post",
-    //             body:imageData
-    //         })
-    //         .then(res=>res.json())
-    //         .then(data=>{
-    //             setPhotoURL(data.secure_url);
-    //         })
-    //         .catch(err=>{
-    //             console.log(err);
-    //         })
-    //     }  
-    // }
     useEffect(()=>{
         if(photo){
             console.log("inside photo useeffect")
@@ -111,7 +85,7 @@ function CreatePost(){
                 <div className="post-postedBy">
                     <img className="post-postedBy-img" src={state.profilePhoto} alt="" />
                     <h6 className="post-postedBy-name">
-                    <Link to="/profile" >{state?state.name:"loading..."}</Link>
+                    <Link to="/profile" >{state?state.username:"loading..."}</Link>
                     </h6>
                 </div>
                 {

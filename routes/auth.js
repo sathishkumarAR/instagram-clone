@@ -21,21 +21,25 @@ const transporter= nodemailer.createTransport(sendGridTransport({
 
 
 router.post("/signup",(req,res)=>{
-    const {name,email,password}=req.body;
-    if(!name || !email || !password){
+    const {username,email,password,fullname}=req.body;
+    if(!username || !email || !password || !fullname){
         return res.status(422).json({error:"Please enter all the fields"});
     }
-    User.findOne({"email":email})
+    User.findOne({ $or: [{ email: email }, { username: username }]})
         .then((foundUser)=>{
             if(foundUser){
-                return res.status(422).json({error:"User already exists with that email"});
+                if(foundUser.email===email){
+                    return res.status(422).json({error:"User already exists with that email"});
+                }
             }
-            bcrypt.hash(password,12)
+            else{
+                bcrypt.hash(password,12)
                 .then(hashedPassword=>{
                     const user= new User({
                         "email":email,
                         "password":hashedPassword,
-                        "name":name
+                        "username":username,
+                        "fullname":fullname
                     });
                     user.save()
                         .then((user)=>{
@@ -54,7 +58,7 @@ router.post("/signup",(req,res)=>{
                 .catch(err=>{
                     console.log("Hashing password failed",err);
                 })
-            
+            } 
         })
         .catch(err=>{
             console.log(err);
@@ -63,25 +67,25 @@ router.post("/signup",(req,res)=>{
 });
 
 router.post("/login",(req,res)=>{
-    const {email,password}=req.body;
+    const {unameOrEmail,password}=req.body;
     
-    if(!email || !password){
+    if(!unameOrEmail || !password){
         return res.status(422).json({error:"Enter all fields"});
     }
 
-    User.findOne({"email":email})
+    User.findOne({$or:[{"username":unameOrEmail},{"email":unameOrEmail}]})
         .then(foundUser=>{
             if(!foundUser){
-                return res.status(422).json({error:"Invalid Username or Password"});
+                return res.status(422).json({error:"Invalid username or password"});
             }
             bcrypt.compare(password,foundUser.password)
                 .then(isMatching=>{
                     if(!isMatching){
-                        return res.status(422).json({error:"Invalid Username or Password"});
+                        return res.status(422).json({error:"Invalid username or password"});
                     }
                     const token=jwt.sign({_id:foundUser._id},JWT_SECRET);
-                    const {_id,name,email,following,followers,profilePhoto}=foundUser;
-                    res.json({token:token,user:{_id,name,email,following,followers,profilePhoto}});
+                    const {_id,username,email,following,followers,profilePhoto}=foundUser;
+                    res.json({token:token,user:{_id,username,email,following,followers,profilePhoto}});
 
                 })
                 .catch(err=>{
@@ -118,7 +122,7 @@ router.post("/reset-password",(req,res)=>{
                             from: "noreply.instaclone.app@gmail.com",
                             subject:"Reset Password - Instaclone",
                             html:`
-                            <p>Dear ${user.name},</p><p>You have requested a password reset for your account in Instaclone.</p>
+                            <p>Dear ${user.username},</p><p>You have requested a password reset for your account in Instaclone.</p>
                             <p>Click this <a href="${SITE_LINK}/reset/${token}">link</a> to reset password</p>
                             <p>The link will expire in 60 minutes</p><p>If you did not request a password reset you can safely ignore this email.</p>
                             `

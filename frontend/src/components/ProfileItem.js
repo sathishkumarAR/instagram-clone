@@ -1,11 +1,13 @@
 import React,{useContext} from "react";
 import { UserContext } from "../App";
 import OptionsModal from "./Modals/OptionsModal";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+
 
 
 
 function ProfileItem(props){
+    const history=useHistory();
     function follow(userId){
         return(
             fetch("/follow",{
@@ -71,8 +73,17 @@ function ProfileItem(props){
                     <img className="post-postedBy-img" src={props.user.profilePhoto} alt="profilePic"/>
                 </div>
                 <div>
-                    <Link to={props.user._id!==state._id?"/profile/"+props.user._id:"/profile"}>
-                        <h6 className="post-postedBy-name">{props.user.name}</h6>
+                    <Link to={props.user._id!==state._id?"/profile/"+props.user._id:"/profile"}
+                        onClick={()=>{
+                            if(props.user._id===state._id){
+                                history.push("/profile")
+                            }
+                            else{
+                                window.location="/profile/"+props.user._id;
+                            }
+                        }}
+                    >
+                        <h6 className="post-postedBy-name">{props.user.username}</h6>
                     </Link>
                 </div>
             </div>
@@ -87,7 +98,7 @@ function ProfileItem(props){
                             <OptionsModal 
                                 needHeader="true"
                                 header={(<div><img className="unfollowImage" 
-                                src= {props.user.profilePhoto} alt="" /><p>{"Unfollow "+props.user.name+"?"}</p></div>)}
+                                src= {props.user.profilePhoto} alt="" /><p>{"Unfollow "+props.user.username+"?"}</p></div>)}
                                 userId={props.user._id}
                                 trigger={<button className="btn unfollowButton">Unfollow</button>} 
                                 unfollow={()=>{unfollow(props.user._id)}}

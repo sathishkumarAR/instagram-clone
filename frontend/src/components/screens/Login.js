@@ -6,17 +6,17 @@ import {UserContext} from "../../App";
 
 
 function Login(){
-    const [email,setEmail]= useState();
+    const [unameOrEmail,setUnameOrEmail]= useState();
     const [password,setPassword]= useState();
+
+    const [validation, setValidation]=useState();
 
     const history= useHistory();
 
     const {state,dispatch} = useContext(UserContext);
 
     function PostData(){
-        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
-            return M.toast({html: "Invalid email", classes:"#ef5350 red lighten-1"})
-        }
+        setValidation(undefined)
         fetch("/login",{
             method:"post",
             headers:{
@@ -24,7 +24,7 @@ function Login(){
             },
             //When sending data to a web server, the data has to be a string. JSON.stringify() converts JSON object to string
             body:JSON.stringify({
-                email:email,
+                unameOrEmail:unameOrEmail,
                 password:password
             })
         })
@@ -33,7 +33,7 @@ function Login(){
         })
         .then(data=>{
             if(data.error){
-                M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
+                setValidation(data.error);
             }
             else{
                 localStorage.setItem("jwt",data.token);
@@ -53,22 +53,39 @@ function Login(){
 
     return (
         <div className="mycard">
+        <div className="mt100px">
+
+        
             <div className="card auth-card input-field">
                 <h1>Instagram</h1>
-                <input onChange={(event)=>{setEmail(event.target.value)}} className="input-outlined" type="text" value={email} placeholder="    Email or username"></input>
-                <input onChange={(event)=>{setPassword(event.target.value)}} className="input-outlined" type="password" value={password} placeholder="  Password"></input>
+                <input onChange={(event)=>{setUnameOrEmail(event.target.value)}} className="input-outlined textTransform-lowercase" type="text" value={unameOrEmail} placeholder="Email or username"></input>
+                <input onChange={(event)=>{setPassword(event.target.value)}} className="input-outlined" type="password" value={password} placeholder="Password"></input>
 
-                <button className="btn waves-effect waves-light blueButton blue" onClick={()=>{
-                    PostData()
-                }}>
+                <button 
+                    className="btn waves-effect waves-light blueButton blue" 
+                    onClick={()=>{
+                        PostData()
+                    }}
+                    disabled={(!unameOrEmail || !password)}
+                >
                     Log in
                 </button>
+                {
+                    validation && 
+                        (
+                            <div className="input-validation-red">
+                                {validation}
+                            </div>
+                        )
+                }
+
                 <p className="blueLink dark"><Link to="/reset">Forgot password?</Link></p>
             </div>
             <div className="card auth-card">
                   <p>Don't have an account?</p>
                   <p className="blueLink dark"><Link to="/signup">Sign up</Link></p>
                   
+            </div>
             </div>
 
         </div>

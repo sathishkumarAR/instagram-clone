@@ -15,7 +15,7 @@ router.get("/user/:user",requireLogin,(req,res)=>{
         .select("-password")
         .then(user=>{
             Post.find({"postedBy":user._id})
-                .populate("postedBy","_id name")
+                .populate("postedBy","_id username")
                 .exec((err,posts)=>{
                     if(err){
                         return res.status(422).json({error:err})
@@ -106,12 +106,12 @@ router.put("/profilePhoto",requireLogin,(req,res)=>{
 
 router.post("/search-users",requireLogin,(req,res)=>{
     const pattern=new RegExp("^"+req.body.query);
-    User.find({name:{$regex:pattern}})
-        .select("_id name profilePhoto")
+    User.find({username:{$regex:pattern}})
+        .select("_id username profilePhoto")
         .then(result=>{
             let users={}
             result.forEach(data => {
-                users[data.name]=data.profilePhoto
+                users[data.username]=data.profilePhoto
             });
             // console.log(users)
             return res.json(users);
@@ -122,7 +122,7 @@ router.post("/search-users",requireLogin,(req,res)=>{
 })
 
 router.post("/getID",requireLogin,(req,res)=>{
-    User.findOne({name:req.body.name})
+    User.findOne({username:req.body.username})
         .select("_id")
         .then(userID=>{
             res.json(userID);
@@ -136,7 +136,7 @@ router.put("/removeProfilePhoto",requireLogin,(req,res)=>{
     User.findByIdAndUpdate(req.user._id,{
         $set:{profilePhoto:"https://res.cloudinary.com/wings05/image/upload/v1625411692/44884218_345707102882519_2446069589734326272_n_u82kmh.jpg" }
     },{new:true})
-    .select("_id name profilePhoto")
+    .select("_id username profilePhoto")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err})
@@ -150,7 +150,7 @@ router.put("/removeProfilePhoto",requireLogin,(req,res)=>{
 router.get("/getFollowers",requireLogin,(req,res)=>{
     const userId= req.query.userId;
     User.find({following:{$in:userId}})
-        .select("name profilePhoto")
+        .select("username profilePhoto")
         .then(data=>{
             return res.json(data);
         })
@@ -162,12 +162,22 @@ router.get("/getFollowers",requireLogin,(req,res)=>{
 router.get("/getFollowing", requireLogin, (req,res)=>{
     const userId= req.query.userId;
     User.find({followers:{$in:userId}})
-        .select("name profilePhoto")
+        .select("username profilePhoto")
         .then(data=>{
             res.json(data);
         })
         .catch(err=>{
             console.log(err);
+        })
+})
+
+router.get("/checkUsername",(req,res)=>{
+    User.findOne({username:req.query.username})
+        .then(data=>{
+            if(data){
+                return res.json({availability:false});
+            }
+            res.json({availability:true})
         })
 })
 

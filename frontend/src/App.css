@@ -29,14 +29,38 @@ nav .brand-logo.left{
   margin-top: 5%;
 }
 .input-outlined{
-  border: 2px solid #eee !important;
+  border: 1px solid #b5b2b2 !important;
   padding:1px 2px !important;
-  width: calc(100% - 2.5rem) !important;
-  margin: 20px auto !important;
+  width: calc(100% - 4rem) !important;
+  margin: 20px auto 5px !important;
   float: none;
   display: block;
   border-radius: 4px !important;
-  transition: box-shadow, border-color 0.15s;
+  padding: 9px 8px 7px 8px !important;
+  transition: none !important;
+  height: 20px !important;
+  background-color: #FAFAFA !important;
+}
+.input-outlined::placeholder{
+  text-transform: none;
+}
+.input-field .input-outlined:focus {
+  border: 1px solid rgb(114, 109, 109) !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+.textTransform-lowercase{
+  text-transform: lowercase;
+}
+.input-validation-red{
+  color: #d93025;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+}
+.input-validation-green{
+  color: #78a552;
 }
 
 textarea{
@@ -57,10 +81,7 @@ textarea{
 .createPost-card button{
   width: calc(100% - 2.5rem) !important;
 }
-.input-field .input-outlined:focus {
-  border: 1px solid rgb(114, 109, 109) !important;
-  box-shadow: 0 1px 0 0 rgb(114, 109, 109) !important;
-}
+
 
 .blueButton{
   background-color: #0095f6 !important;
@@ -69,6 +90,7 @@ textarea{
   border-radius: 4px;
   line-height: 0;
   margin-bottom: 10px;
+  margin-top: 15px;
   box-shadow: none;
 }
 .mb-inherit{
@@ -88,6 +110,10 @@ textarea{
 .mt100px{
   margin-top: 100px !important;
 }
+.mt-20px{
+  margin-top: -20px;
+}
+
 
 .warning-icon{
   color: #ea9f14f0;
@@ -97,6 +123,13 @@ textarea{
   box-shadow: none;
   background-color: #0074cc !important;
 }
+
+.blueButton:disabled{
+  background-color: rgba(0,149,246,.3) !important;
+  opacity: 1;
+  color:white !important;
+}
+
 .followButton{
   height: 30px;
   width: 91px;
@@ -115,6 +148,21 @@ textarea{
 }
 .unfollowButton:hover{
   box-shadow: none;
+}
+
+.icon-inside-input{
+  position: absolute;
+  right: 35px;
+  bottom: 5px;
+  visibility: hidden;
+  color: #1a9a5f;
+}
+.input-contain-icon{
+  padding-right: 42px !important;
+  width: calc(100% - 6.5rem) !important;
+}
+.input-container{
+  position: relative;
 }
 
 .search-input{
@@ -154,7 +202,7 @@ li{
 .auth-card{
   padding:20px;
   text-align: center;
-  max-width: 400px;
+  max-width: 380px;
   margin: 10px auto;
 }
 .auth-card p{

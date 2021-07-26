@@ -52,7 +52,6 @@ function AutoCompleteInput(){
             //   console.log(input.value);
             setSearch(input.value)
               setSelectedUser(input.value);
-              
             },
       
             //Minimum number of characters before autocomplete starts.
@@ -73,7 +72,7 @@ function AutoCompleteInput(){
                     "Authorization":"Bearer "+localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
-                    name:selectedUser
+                    username:selectedUser
                 })
             })
             .then(res=>res.json())

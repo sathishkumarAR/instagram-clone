@@ -115,10 +115,6 @@ function Profile(){
             console.log(err);
         })
     },[])
-    // var instance = M.Modal.getInstance(FollowModal.current);
-    // if(instance.isOpen){
-    //     console.log("working")
-    // }
    
     
 
@@ -219,7 +215,7 @@ function Profile(){
                      </div>
 
                         <div>
-                            <h4>{state?state.name:"loading..."}</h4>
+                            <h4>{state?state.username:"loading..."}</h4>
                             <div className="profileData">
                                 <h6 className="fw400"><span>{myposts.length}</span> posts</h6>
                                 <h6 className="fw400" onClick={()=>{getFollowers()}}>
