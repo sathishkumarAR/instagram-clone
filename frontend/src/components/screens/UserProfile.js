@@ -177,19 +177,20 @@ function UserProfile(){
 
     return (
         <>
-        {userProfile? <div className="profilePage">
+        {userProfile? 
+        <div className="profilePage">
             <div className="profileHeader">
-                <div >
+                <div className="profileHeader-left" >
                     <img className="profileImage" src={userProfile.user.profilePhoto} alt="" />
                 </div>
                 
-                <div>
+                <div className="profileHeader-right">
                     <div className="profileName">
-                        <h4>
+                        <h2>
                             {userProfile.user.username?userProfile.user.username:<div class="progress">
-        <div class="indeterminate" style={{width: "70%"}}></div>
-    </div>}
-                        </h4>
+                                <div class="indeterminate" style={{width: "70%"}}></div>
+                            </div>}
+                        </h2>
 
                         
                         {(userProfile.user.followers.includes(state._id))?
@@ -198,7 +199,7 @@ function UserProfile(){
                                 header={(<div><img className="unfollowImage" 
                                 src= {userProfile.user.profilePhoto} alt="" /><p>{"Unfollow "+userProfile.user.username+"?"}</p></div>)}
                                 userId={userProfile.user._id}
-                                trigger={<button className="btn unfollowButton">Unfollow</button>} 
+                                trigger={<button className="btn whiteButton">Unfollow</button>} 
                                 unfollow={()=>{unfollow()}}
                                 options={unfollowOptions}
                             />
@@ -259,7 +260,83 @@ function UserProfile(){
                         </h6>
 
                     </div>
+                    <div className="profile-info">
+                            <h3 className="heading-text-small">{userProfile.user.fullname}</h3>
+                            <p>
+                                {
+                                    userProfile.user.bio
+                                }
+                            </p>
+                            <p className="blueLink dark"><a href={`https://${userProfile.user.website}`} target="_blank" rel="noopener noreferrer">{userProfile.user.website}</a></p>
+                    </div>
                 </div>
+                
+            </div>
+            <div className="profile-info-mobile">
+                            <h3 className="heading-text-small">{userProfile.user.fullname}</h3>
+                            <p>
+                                {
+                                    userProfile.user.bio
+                                }
+                            </p>
+                            <p className="blueLink dark"><a href={`https://${userProfile.user.website}`} target="_blank" rel="noopener noreferrer">{userProfile.user.website}</a></p>
+            </div>
+            
+
+
+            <div className="profileData-mobile">
+                <hr className="fullscreen-line"></hr>
+            
+                {/* <hr></hr> */}
+                <div >
+                        <h6 >
+                            <span className="fw400">
+                                <span >{userProfile.posts.length}</span> posts</span>
+                        </h6>
+                        
+                        <h6 onClick={()=>{getFollowers()}}> 
+                            <Modal className="true followModal"
+                    
+                                header={<div><h3 className="heading-text-small">Followers</h3><hr></hr></div>}
+                                trigger={<div className="pointer" ><span className="fw400"><span>{userProfile.user.followers.length}</span> followers</span></div>}>
+                                {   
+                                    followers &&
+                                        (
+                                            followers.length===0 ?
+                                            <p>No followers</p>
+                                            :
+                                            followers.map((follower,index)=>{
+                                                    return <ProfileItem key={index} user={follower}/> 
+                                            })
+                                        )
+                                }
+                            </Modal>
+                        </h6>
+
+                        <h6 onClick={()=>{getFollowing()}}>
+                                
+                            <Modal className="true followModal"
+            
+                                header={<div><h3 className="heading-text-small">Following</h3><hr></hr></div>}
+                                trigger={<div className="pointer"><span className="fw400"><span>{userProfile.user.following.length}</span> following</span></div>}>
+                                {   
+                                    
+                                    followingUsers &&
+                                        (   
+                                            followingUsers.length===0 ?
+                                            <p>No following</p>
+                                            :
+                                            followingUsers.map((user,index)=>{
+                                                    return <ProfileItem key={index} user={user}/> 
+                                            })
+                                        )
+                                }
+                            </Modal>
+                                
+                        </h6>
+
+                    </div>
+                    <hr className="fullscreen-line"></hr>
             </div>
 
             <div className="profileGallery">

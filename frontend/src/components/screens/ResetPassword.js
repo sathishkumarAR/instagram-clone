@@ -6,13 +6,16 @@ import {UserContext} from "../../App";
 
 
 function ResetPassword(){
-    const [email,setEmail]= useState();
+    
+    const [unameOrEmail,setUnameOrEmail]= useState();
+    const [validation, setValidation]=useState(undefined);
     const history= useHistory();
-
+    
     function PostData(){
-        if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
-            return M.toast({html: "Invalid email", classes:"#ef5350 red lighten-1"})
-        }
+        // if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+        //     return M.toast({html: "Invalid email", classes:"#ef5350 red lighten-1"})
+        // }
+        setValidation(undefined)
         fetch("/reset-password",{
             method:"post",
             headers:{
@@ -20,7 +23,7 @@ function ResetPassword(){
             },
             //When sending data to a web server, the data has to be a string. JSON.stringify() converts JSON object to string
             body:JSON.stringify({
-                email:email,
+                unameOrEmail:unameOrEmail,
             })
         })
         .then(res=>{
@@ -28,7 +31,8 @@ function ResetPassword(){
         })
         .then(data=>{
             if(data.error){
-                M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
+                setValidation(data.error);
+                // M.toast({html: data.error, classes:"#ef5350 red lighten-1"})
             }
             else{
                 
@@ -50,16 +54,25 @@ function ResetPassword(){
                     Trouble Logging in?
                 </h6>
                 <br></br>
-                <p>
-                Enter your email. We'll send you a link to get back into your account
-                </p>
-                <input onChange={(event)=>{setEmail(event.target.value)}} className="input-outlined" type="text" value={email} placeholder="    Email or username"></input>
+                <div className="text-center">
+                Enter your username or email. We'll send you a link to get back into your account
+                </div>
+                <input onChange={(event)=>{setUnameOrEmail(event.target.value)}} className="input-outlined" type="text" value={unameOrEmail} placeholder="Email or username"></input>
 
                 <button onClick={()=>{
                     PostData()
                 }} className="btn waves-effect waves-light blueButton blue" >
                     Reset password
                 </button>
+
+                {
+                    validation && 
+                        (
+                            <div className="input-validation-red">
+                                    {validation}
+                                </div>
+                        )
+                }
             </div>
             <div className="card auth-card">
                   <p>Don't have an account?</p>

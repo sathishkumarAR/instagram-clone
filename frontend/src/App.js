@@ -12,6 +12,8 @@ import { reducer,initialState } from "./reducers/userReducer";
 import ResetPassword from "./components/screens/ResetPassword";
 import NewPassword from "./components/screens/NewPassword";
 import FollowingPosts from "./components/screens/FollowingPosts";
+import BottomNavBar from "./components/BottomNavBar";
+import EditProfile from "./components/screens/EditProfile";
 
 
 export const UserContext=createContext();
@@ -47,6 +49,7 @@ function Routing(){
       <Route exact path="/reset">
         <ResetPassword/>
       </Route>
+      <Route path="/editProfile"><EditProfile /></Route>
       <Route path="/reset/:token">
         <NewPassword />
       </Route>
@@ -63,6 +66,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routing />
+        <BottomNavBar />
       </BrowserRouter>
     </UserContext.Provider>
     

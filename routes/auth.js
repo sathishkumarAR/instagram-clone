@@ -84,8 +84,8 @@ router.post("/login",(req,res)=>{
                         return res.status(422).json({error:"Invalid username or password"});
                     }
                     const token=jwt.sign({_id:foundUser._id},JWT_SECRET);
-                    const {_id,username,email,following,followers,profilePhoto}=foundUser;
-                    res.json({token:token,user:{_id,username,email,following,followers,profilePhoto}});
+                    const {_id,username,email,fullname,following,followers,website,bio,gender,profilePhoto}=foundUser;
+                    res.json({token:token,user:{_id,username,email,fullname,following,followers,website,bio,gender,profilePhoto}});
 
                 })
                 .catch(err=>{
@@ -106,10 +106,10 @@ router.post("/reset-password",(req,res)=>{
             console.log(err);
         }
         const token= buffer.toString("hex");
-        User.findOne({email:req.body.email})
+        User.findOne({$or:[{username:req.body.unameOrEmail},{email:req.body.unameOrEmail}]})
             .then((user)=>{
                 if(!user){
-                    return res.status(422).json({error:"No users found with that email"})
+                    return res.status(422).json({error:"No users found"})
                 }
                 console.log(token);
                 user.resetToken= token;

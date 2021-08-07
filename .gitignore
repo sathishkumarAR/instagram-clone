@@ -1,6 +1,7 @@
 dev.js
 node_modules/
 notes.txt
+mongo-shell-queries.txt
 .env
 .env.test
 .cache

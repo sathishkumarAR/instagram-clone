@@ -72,7 +72,7 @@ function ProfileItem(props){
                 <div>
                     <img className="post-postedBy-img" src={props.user.profilePhoto} alt="profilePic"/>
                 </div>
-                <div>
+                <div className="names-container">
                     <Link to={props.user._id!==state._id?"/profile/"+props.user._id:"/profile"}
                         onClick={()=>{
                             if(props.user._id===state._id){
@@ -83,8 +83,9 @@ function ProfileItem(props){
                             }
                         }}
                     >
-                        <h6 className="post-postedBy-name">{props.user.username}</h6>
+                        <h6 className="profileItem-username">{props.user.username}</h6>
                     </Link>
+                    <div className="profileItem-fullname">{props.user.fullname}</div>
                 </div>
             </div>
             <div>
@@ -100,7 +101,7 @@ function ProfileItem(props){
                                 header={(<div><img className="unfollowImage" 
                                 src= {props.user.profilePhoto} alt="" /><p>{"Unfollow "+props.user.username+"?"}</p></div>)}
                                 userId={props.user._id}
-                                trigger={<button className="btn unfollowButton">Unfollow</button>} 
+                                trigger={<button className="btn whiteButton">Unfollow</button>} 
                                 unfollow={()=>{unfollow(props.user._id)}}
                                 options={unfollowOptions}
                             />

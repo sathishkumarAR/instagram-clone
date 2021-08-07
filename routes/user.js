@@ -150,7 +150,7 @@ router.put("/removeProfilePhoto",requireLogin,(req,res)=>{
 router.get("/getFollowers",requireLogin,(req,res)=>{
     const userId= req.query.userId;
     User.find({following:{$in:userId}})
-        .select("username profilePhoto")
+        .select("username fullname profilePhoto")
         .then(data=>{
             return res.json(data);
         })
@@ -162,7 +162,7 @@ router.get("/getFollowers",requireLogin,(req,res)=>{
 router.get("/getFollowing", requireLogin, (req,res)=>{
     const userId= req.query.userId;
     User.find({followers:{$in:userId}})
-        .select("username profilePhoto")
+        .select("username fullname profilePhoto")
         .then(data=>{
             res.json(data);
         })
@@ -179,6 +179,55 @@ router.get("/checkUsername",(req,res)=>{
             }
             res.json({availability:true})
         })
+})
+
+router.put("/edit-profile", requireLogin,(req,res)=>{
+    const {username, email, bio, website,gender, fullname}= req.body;
+    console.log(email, req.user.email);
+    if(email!==req.user.email){
+        console.log(email, req.user.email)
+        User.findOne({email:email})
+            .then(data=>{
+                if(data){
+                    console.log("User already exists with that email");
+                    return res.json({error:"User already exists with that email"});
+                }
+                else{
+                    User.findByIdAndUpdate(req.user._id,{
+                        $set:{username,email, bio, website,gender, fullname}
+                    },{new:true})
+                    .select("-password")
+                    .exec((err,result)=>{
+                        if(err){
+                            res.json({error:err})
+                        }
+                        else{
+                            res.json(result);
+                            
+                        }
+                    })
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+    }
+    else{
+        User.findByIdAndUpdate(req.user._id,{
+            $set:{username, bio, website,gender, fullname}
+        },{new:true})
+        .select("-password")
+        .exec((err,result)=>{
+            if(err){
+                res.json({error:err})
+            }
+            else{
+                res.json(result);
+                
+            }
+        })
+    }
+    
 })
 
 

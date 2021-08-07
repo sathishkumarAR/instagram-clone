@@ -41,7 +41,7 @@ function Login(){
                 
                 dispatch({type:"USER",payload:data.user});
 
-                M.toast({html:"Signed in successfully", classes:"#4caf50 green"})
+                // M.toast({html:"Signed in successfully", classes:"#4caf50 green"})
                 history.push("/");
             }
         })
@@ -58,7 +58,7 @@ function Login(){
         
             <div className="card auth-card input-field">
                 <h1>Instagram</h1>
-                <input onChange={(event)=>{setUnameOrEmail(event.target.value)}} className="input-outlined textTransform-lowercase" type="text" value={unameOrEmail} placeholder="Email or username"></input>
+                <input onChange={(event)=>{setUnameOrEmail((event.target.value).toLowerCase())}} className="input-outlined textTransform-lowercase" type="text" value={unameOrEmail} placeholder="Email or username"></input>
                 <input onChange={(event)=>{setPassword(event.target.value)}} className="input-outlined" type="password" value={password} placeholder="Password"></input>
 
                 <button 

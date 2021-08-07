@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useCallback, useState,useRef } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import OptionsModal from "../Modals/OptionsModal"
 import {Modal} from "react-materialize";
@@ -59,7 +60,6 @@ function Profile(){
             })
             .then(res=>res.json())
             .then(data=>{
-                console.log(data);
                 dispatch({type:"UPDATE_PROFILE_PHOTO",payload:{profilePhoto:photoURL}})
                 localStorage.setItem("user",JSON.stringify({...state,profilePhoto:photoURL}));
                 history.push("/profile");
@@ -190,76 +190,155 @@ function Profile(){
                 state?
                 <div className="profilePage">
                     <div className="profileHeader">
-                    <OptionsModal 
-                        needHeader="true"
-                        header={<h6 className="changeProfilePhoto-header">Change Profile Photo</h6>}
-                        userId={state._id}
-                        trigger={<div title="Change Profile Picture">
-                            <div >
-                                <img className="profileImage pointer" src={state.profilePhoto} alt="" />
+                        <OptionsModal 
+                            needHeader="true"
+                            header={<h6 className="changeProfilePhoto-header">Change Profile Photo</h6>}
+                            userId={state._id}
+                            trigger={<div title="Change Profile Picture">
+                                <div className="profileHeader-left">
+                                    <img className="profileImage pointer" src={state.profilePhoto} alt="" />
+                                </div>
+                            </div>}
+                            upload={()=>{uploadProfilePhoto()}}
+                            remove={()=>{removeProfilePhoto()}}
+                            options={profilePhotoOptions}
+                        />
+                        <div className="file-field hide">
+                        
+                            <input id="upload" type="file" onChange={(event)=>{
+                                setPhoto(event.target.files[0]);
+                            }} />
+                            
+                            <div className="file-path-wrapper hide-file-path">
+                                    <input className="file-path validate" type="text"/>
                             </div>
-                        </div>}
-                        upload={()=>{uploadProfilePhoto()}}
-                        remove={()=>{removeProfilePhoto()}}
-                        options={profilePhotoOptions}
-                    />
-                    <div className="file-field hide">
+                        </div>
+
+                            <div className="profileHeader-right">
+                                <div className="profileName">
+                                    <h2>{state?state.username:"loading..."}</h2>
+                                    <Link to="/editProfile"><button className="btn whiteButton wid-fit-content">Edit Profile</button></Link>
+                                </div>
+
+
+                                
+                                <div className="profileData">
+                                    <h6 className="fw400"><span>{myposts.length}</span> posts</h6>
+                                    
+                                    <h6 className="fw400" onClick={()=>{getFollowers()}}>
+                            
+                                        <Modal className="true followModal"
+                        
+                                            header={<div><h3 className="heading-text-small">Followers</h3><hr></hr></div>}
+                                            trigger={<div className="pointer" ><span>{state?state.followers.length:"0"}</span> followers</div>}>
+                                            {   
+                                                
+                                                followers &&
+                                                (
+                                                    followers.length===0 ?
+                                                    <p>No followers</p>
+                                                    :
+                                                    followers.map((follower,index)=>{
+                                                            return <ProfileItem key={index} user={follower}/> 
+                                                    })
+                                                )
+                                            }
+                                        </Modal>
+                                    </h6>
+
+                                    <h6 className="fw400" onClick={()=>{getFollowing()}}>
+                                    
+                                    <Modal className="true followModal"
                     
-                        <input id="upload" type="file" onChange={(event)=>{
-                            setPhoto(event.target.files[0]);
-                        }} />
-                        
-                        <div className="file-path-wrapper hide-file-path">
-                                <input className="file-path validate" type="text"/>
-                        </div>
-                     </div>
-
-                        <div>
-                            <h4>{state?state.username:"loading..."}</h4>
-                            <div className="profileData">
-                                <h6 className="fw400"><span>{myposts.length}</span> posts</h6>
-                                <h6 className="fw400" onClick={()=>{getFollowers()}}>
-                        
-                                <Modal className="true followModal"
-                
-                                    header={<div><h3 className="heading-text-small">Followers</h3><hr></hr></div>}
-                                    trigger={<div className="pointer" ><span>{state?state.followers.length:"0"}</span> followers</div>}>
-                                    {   
-                                        
-                                        followers &&
-                                        (
-                                            followers.length===0 ?
-                                            <p>No followers</p>
-                                            :
-                                            followers.map((follower,index)=>{
-                                                    return <ProfileItem key={index} user={follower}/> 
-                                            })
-                                        )
-                                    }
-                                </Modal>
-                                </h6>
-
-                                <h6 className="fw400" onClick={()=>{getFollowing()}}>
-                                
-                                <Modal className="true followModal"
-                
-                                    header={<div><h3 className="heading-text-small">Following</h3><hr></hr></div>}
-                                    trigger={<div className="pointer"><span>{state?state.following.length:"0"}</span> following</div>}>
-                                    {   
-                                        followingUsers &&
-                                        (    followingUsers.length===0 ?
-                                            <p>No following</p>
-                                            :
-                                            followingUsers.map((user,index)=>{
-                                                    return <ProfileItem key={index} user={user}/> 
-                                            }))
-                                    }
-                                </Modal>
-                                
-                                </h6>
+                                        header={<div><h3 className="heading-text-small">Following</h3><hr></hr></div>}
+                                        trigger={<div className="pointer"><span>{state?state.following.length:"0"}</span> following</div>}>
+                                        {   
+                                            followingUsers &&
+                                            (    followingUsers.length===0 ?
+                                                <p>No following</p>
+                                                :
+                                                followingUsers.map((user,index)=>{
+                                                        return <ProfileItem key={index} user={user}/> 
+                                                }))
+                                        }
+                                    </Modal>
+                                    
+                                    </h6>
+                                </div>
+                                <div className="profile-info">
+                                    <h3 className="heading-text-small">{state.fullname}</h3>
+                                    <p>
+                                        {state.bio}
+                                    </p>
+                                    <p className="blueLink dark"><a href={`https://${state.website}`} target="_blank" rel="noopener noreferrer">{state.website}</a></p>
+                                </div>
                             </div>
-                        </div>
                     </div>
+                    <div className="profile-info-mobile">
+                        <h3 className="heading-text-small">{state.fullname}</h3>
+                        <p>
+                            {state.bio}
+                        </p>
+                        <p className="blueLink dark"><a href={`https://${state.website}`} target="_blank" rel="noopener noreferrer">{state.website}</a></p>
+                    </div>
+                    
+                    <div className="profileData-mobile">
+                        <hr className="fullscreen-line"></hr>
+                    
+                        <div >
+                                <h6 >
+                                    <span className="fw400">
+                                        <span >{myposts.length}</span> posts</span>
+                                </h6>
+                                
+                                <h6 onClick={()=>{getFollowers()}}> 
+                                    <Modal className="true followModal"
+                            
+                                        header={<div><h3 className="heading-text-small">Followers</h3><hr></hr></div>}
+                                        trigger={<div className="pointer" ><span className="fw400"><span>{state.followers.length}</span> followers</span></div>}>
+                                        {   
+                                            followers &&
+                                                (
+                                                    followers.length===0 ?
+                                                    <p>No followers</p>
+                                                    :
+                                                    followers.map((follower,index)=>{
+                                                            return <ProfileItem key={index} user={follower}/> 
+                                                    })
+                                                )
+                                        }
+                                    </Modal>
+                                </h6>
+
+                                <h6 onClick={()=>{getFollowing()}}>
+                                        
+                                    <Modal className="true followModal"
+                    
+                                        header={<div><h3 className="heading-text-small">Following</h3><hr></hr></div>}
+                                        trigger={<div className="pointer"><span className="fw400"><span>{state.following.length}</span> following</span></div>}>
+                                        {   
+                                            
+                                            followingUsers &&
+                                                (   
+                                                    followingUsers.length===0 ?
+                                                    <p>No following</p>
+                                                    :
+                                                    followingUsers.map((user,index)=>{
+                                                            return <ProfileItem key={index} user={user}/> 
+                                                    })
+                                                )
+                                        }
+                                    </Modal>
+                                        
+                                </h6>
+
+                            </div>
+                            <hr className="fullscreen-line"></hr>
+                    </div>
+
+                    
+
+
                     <div className="profileGallery">
 
                         {

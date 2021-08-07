@@ -144,7 +144,6 @@ function Signup(){
                             hideCheckIcon("visible")
                         :
                         null
-                            
                     )
                     :
                     null

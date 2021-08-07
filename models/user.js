@@ -30,6 +30,18 @@ const userSchema= new mongoose.Schema({
         type:ObjectId,
         ref:"User"
     }],
+    website:{
+        type:String,
+        default:""
+    },
+    bio:{
+        type:String,
+        default:""
+    },
+    gender:{
+        type:String,
+        default:""
+    },
     resetToken:String,
     expireToken:Date
 });
